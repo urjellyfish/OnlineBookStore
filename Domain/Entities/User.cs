@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Domain.Enums;
+using System.Collections;
 
 namespace Domain.Entities
 {
@@ -6,11 +7,11 @@ namespace Domain.Entities
     {
         public int UserId { get; set; }
         public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
         public string FName { get; set; } = string.Empty;
         public string LName { get; set; } = string.Empty;
         public DateTime Dob { get; set; }
-        public string Role { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
