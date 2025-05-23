@@ -11,7 +11,7 @@ namespace Domain.Entities
         public string FName { get; set; } = string.Empty;
         public string LName { get; set; } = string.Empty;
         public DateTime Dob { get; set; }
-        public UserRole Role { get; set; }
+        public UserRole Role { get; set; } = UserRole.User;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

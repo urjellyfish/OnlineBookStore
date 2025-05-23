@@ -7,7 +7,10 @@ namespace Infrastructure.Data
 {
     public class BookstoreDbContext : DbContext
     {
-
+        public BookstoreDbContext(DbContextOptions<BookstoreDbContext> options)
+            : base(options)
+        {
+        }
         public DbSet<Book> Books => Set<Book>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<BookCategory> BookCategories => Set<BookCategory>();
