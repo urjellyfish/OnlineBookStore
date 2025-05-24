@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /.env
 /Web/.env
 .json
+/OnlineBookStore/appsettings.json
