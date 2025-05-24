@@ -10,7 +10,7 @@ namespace Infrastructure.Repository
     public interface IAuthRepository
     {
         Task<User> RegisterAsync(User user);
-        //Task<bool> Login(string username, string password);
+        Task<User?> Login(string email, string password);
         Task<bool> UserExistsAsync(string email);
         //Task<bool> ChangePassword(string username, string newPassword);
         //Task<bool> ResetPassword(string username, string newPassword);

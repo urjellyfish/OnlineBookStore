@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using Application.Dto.LoginDto;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Application.Services.Auth
     public interface IAuthService
     {
         Task<User?> RegisterAsync(UserDto userDto);
+        Task<LoginResponse> Login(string email, string password);
     }
 }

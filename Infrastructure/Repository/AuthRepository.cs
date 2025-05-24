@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,22 @@ namespace Infrastructure.Repository
         {
             _context = context;
         }
+
+        public async Task<User?> Login(string email, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (user == null)
+            {
+                return null;
+            }
+            var result = new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, password);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                return null;
+            }
+            return user;
+        }
+
         public async Task<User> RegisterAsync(User user)
         {
             _context.Users.Add(user);
