@@ -18,6 +18,11 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<User?> Login(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
@@ -44,5 +49,7 @@ namespace Infrastructure.Repository
         {
             return await _context.Users.AnyAsync(x => x.Email == email);
         }
+
+        
     }
 }

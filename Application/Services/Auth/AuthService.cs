@@ -25,6 +25,46 @@ namespace Application.Services.Auth
             _configuration = configuration;
         }
 
+        public async Task<LoginResponse> HandleGoogleLoginAsync(ClaimsPrincipal principal)
+        {
+            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+            var fName = principal.FindFirst(ClaimTypes.GivenName)?.Value;
+            var lName = principal.FindFirst(ClaimTypes.Surname)?.Value;
+            if (string.IsNullOrEmpty(email))
+            {
+                return new LoginResponse
+                {
+                    IsSuccess = false,
+                    Message = "Email not found"
+                };
+            }
+            var user = await _authRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Email = email,
+                    FName = fName,
+                    LName = lName,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+                await _authRepository.RegisterAsync(user);
+            }
+
+            var token = CreateToken(user);
+
+            return new LoginResponse
+            {
+                IsSuccess = true,
+                Message = "Login with google successful",
+                Token = token,
+                Email = user.Email,
+                FName = user.FName,
+                LName = user.LName
+            };
+        }
+
         public async Task<LoginResponse> Login(string email, string password)
         {
             var user = await _authRepository.Login(email, password);

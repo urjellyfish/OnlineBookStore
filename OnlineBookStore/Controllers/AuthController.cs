@@ -61,18 +61,19 @@ namespace OnlineBookStore.Controllers
         public async Task<IActionResult> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var claims = result.Principal.Identities.FirstOrDefault()?.Claims;
-
-            var email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var name = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-
-            // Optionally: check if user exists, register if not, generate JWT etc.
-            return Ok(new
+            if(!result.Succeeded)
             {
-                Message = "Login successful with Google",
-                Email = email,
-                Name = name
-            });
+                return Unauthorized("Google authentication failed.");
+            }
+
+            var principle = result.Principal;
+            var response = await _authService.HandleGoogleLoginAsync(principle);
+
+            
+            if (!response.IsSuccess)
+                return BadRequest(response.Message);
+
+            return Ok(response);
         }
 
     }
