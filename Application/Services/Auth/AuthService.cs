@@ -1,7 +1,7 @@
 ﻿using Application.Dto;
 using Application.Dto.LoginDto;
 using Domain.Entities;
-using Infrastructure.Repository;
+using Infrastructure.Repository.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +30,7 @@ namespace Application.Services.Auth
             var email = principal.FindFirst(ClaimTypes.Email)?.Value;
             var fName = principal.FindFirst(ClaimTypes.GivenName)?.Value;
             var lName = principal.FindFirst(ClaimTypes.Surname)?.Value;
+            
             if (string.IsNullOrEmpty(email))
             {
                 return new LoginResponse

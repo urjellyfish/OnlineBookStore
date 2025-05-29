@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Repository.Auth
 {
     public class AuthRepository : IAuthRepository
     {
@@ -26,7 +26,7 @@ namespace Infrastructure.Repository
         public async Task<User?> Login(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-            if (user == null)
+            if (user is null)
             {
                 return null;
             }

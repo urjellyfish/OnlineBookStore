@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Repository.Auth
 {
     public interface IAuthRepository
     {
@@ -13,6 +13,7 @@ namespace Infrastructure.Repository
         Task<User?> Login(string email, string password);
         Task<bool> UserExistsAsync(string email);
         Task<User?> GetUserByEmailAsync(string email);
+
         //Task<bool> ChangePassword(string username, string newPassword);
         //Task<bool> ResetPassword(string username, string newPassword);
         //Task<bool> DeleteUser(string username);
